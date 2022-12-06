@@ -1,15 +1,19 @@
-import { client, urlFor } from "../../lib/client";
 import {
+	AiFillStar,
 	AiOutlineMinus,
 	AiOutlinePlus,
-	AiFillStar,
 	AiOutlineStar,
 } from "react-icons/ai";
+import { client, urlFor } from "../../lib/client";
+
 import { Product } from "../../components";
 import { useState } from "react";
+import { useStoreContext } from "../../context/StoreContext";
+
 const ProductDetails = ({ product, products }) => {
 	const { image, name, price, details } = product;
 	const [index, setIndex] = useState(0);
+	const { incQty, decQty, qty, onAdd } = useStoreContext();
 	return (
 		<div>
 			<div className="product-detail-container">
@@ -41,6 +45,7 @@ const ProductDetails = ({ product, products }) => {
 					<h1>{name}</h1>
 					<div className="reviews">
 						<div className="">
+							<AiFillStar />
 							<AiOutlineStar />
 						</div>
 						<p>(20)</p>
@@ -52,18 +57,18 @@ const ProductDetails = ({ product, products }) => {
 					<div className="quantity">
 						<h3>Quantity:</h3>
 						<p className="quantity-desc">
-							<span className="minus" onClick={() => {}}>
+							<span className="minus" onClick={decQty}>
 								<AiOutlineMinus />
 							</span>
-							<span className="num">0 </span>
-							<span className="plus">
+							<span className="num">{qty} </span>
+							<span className="plus" onClick={incQty}>
 								<AiOutlinePlus />
 							</span>
 						</p>
 					</div>
 					<div className="buttons">
-						<button className="add-to-cart" onClick={() => {}}>
-							Add To Card
+						<button className="add-to-cart" onClick={() => onAdd(product, qty)}>
+							Add To Cart
 						</button>
 						<button className="buy-now" onClick={() => {}}>
 							Buy Now

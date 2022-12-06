@@ -1,10 +1,17 @@
-import { Layout } from "../components";
 import "./styles/globals.css";
+
+import { Layout } from "../components";
+import { StoreContext } from "../context/StoreContext";
+import { Toaster } from "react-hot-toast";
+
 const App = ({ Component, pageProps }) => {
 	return (
-		<Layout>
-			<Component {...pageProps} />;
-		</Layout>
+		<StoreContext>
+			<Layout>
+				<Toaster />
+				<Component {...pageProps} />;
+			</Layout>
+		</StoreContext>
 	);
 };
 
